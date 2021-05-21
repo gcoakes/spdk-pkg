@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 17 * * 5"
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    container: ubuntu
+    name: Build .deb
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Build .deb
+        run: ./build-deb.sh
+      - name: Archive .deb
+        uses: actions/upload-artifact@v2
+        with:
+          name: deb-package
+          path: |
+            spdk_*.deb
