@@ -1,0 +1,5 @@
+#!/bin/sh
+bdfs="$(/usr/libexec/spdk-setup status 2>/dev/null | grep 'NVMe' | tr -s ' ' | cut -f2 -d' ')"
+for bdf in $bdfs; do
+    echo nvme > "/sys/bus/pci/devices/$bdf/driver_override"
+done

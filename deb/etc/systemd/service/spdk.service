@@ -1,0 +1,16 @@
+[Unit]
+Description=SPDK
+
+[Service]
+Type=simple
+ExecStartPre=modprobe cuse
+ExecStartPre=/usr/libexec/spdk-setup
+ExecStart=/usr/bin/spdk_tgt -i 0
+ExecStartPost=/usr/libexec/spdk-bdev-setup
+ExecStopPost=/usr/libexec/spdk-bdev-teardown
+ExecStopPost=/usr/libexec/spdk-setup
+
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

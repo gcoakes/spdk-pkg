@@ -1,0 +1,9 @@
+#!/bin/sh
+bdfs="$(/usr/libexec/spdk-setup status 2>/dev/null | grep 'NVMe' | tr -s ' ' | cut -f2 -d' ')"
+for bdf in $bdfs; do
+    /usr/libexec/spdk-rpc -r 10 << EOF
+bdev_nvme_attach_controller -b "nvme$bdf" -t PCIe -a "$bdf"
+bdev_nvme_cuse_register -n "nvme$bdf"
+EOF
+    echo uio_pci_generic > "/sys/bus/pci/devices/$bdf/driver_override"
+done

@@ -1,0 +1,7 @@
+Package: spdk
+Version: @VERSION@
+Architecture: amd64
+Depends: libaio1, libuuid1, libnuma1, openssl, fuse3
+Recommends: fio
+Maintainer: gregcoakes@gmail.com
+Description: SPDK nvme-cuse interface and fio plugin.
